@@ -26,6 +26,22 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # importance = db.Column(db.Integer, nullable = False)
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+#
+# class Private_Info(db.Model):
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#     password = db.Column(db.String(60), nullable=False)
+#     email = db.Column(db.String(120), unique=True, nullable=False)
+#     birth_day = db.Column(db.String(120), unique=False, nullable=True)
+#
+# class Bucket_To_Category(db.Model):
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#     id = db.Column(db.Integer, primary_key=True)
+#     category_id = db.Column(db.Integer, nullable=False)
+#
+# class Category(db.Model):
+#     category_id = db.Column(db.Integer, primary_key=True)
+#     category = db.Column(db.String(30), unique=False, nullable=False)
