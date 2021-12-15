@@ -5,7 +5,7 @@ from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt, mail
 from flaskblog.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                              PostForm, RequestResetForm, ResetPasswordForm)
-from flaskblog.models import User, Post
+from flaskblog.models import User, Post, Private_Info, Bucket_to_Category, Category, Location
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 
@@ -31,7 +31,14 @@ def register():
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        private = Private_Info(email=form.email.data, password=hashed_password,
+            birthday= form.birthday.data, gender=form.gender.data, race=form.race.data)
+        location = Location(city=form.city.data, state=form.state.data, country=form.country.data, zipcode=form.zipcode.data)
         db.session.add(user)
+        db.session.add(private)
+        db.session.add(location)
+
+
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
@@ -77,6 +84,7 @@ def save_picture(form_picture):
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
+    private = Private_Info.query.filter_by(email=current_user.email).first()
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
@@ -101,6 +109,7 @@ def new_post():
     form = PostForm()
     if form.validate_on_submit():
         post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        cat = Category(category_description=form.category.data)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')

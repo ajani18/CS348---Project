@@ -24,6 +24,13 @@ class RegistrationForm(FlaskForm):
     gender = SelectField(label="Gender", choices=gender)
     race = SelectField(label="Race", choices=race)
 
+    city = StringField('City',
+                           validators=[DataRequired()])
+    state = SelectField(label="Race", choices=["LA", "CA", "TX"])
+    country = SelectField(label="Race", choices=["USA"])
+    zipcode = StringField('Zipcode',
+                           validators=[DataRequired()])
+
     submit = SubmitField('Sign Up')
 
     def validate_username(self, username):
@@ -46,11 +53,15 @@ class LoginForm(FlaskForm):
 
 
 class UpdateAccountForm(FlaskForm):
+    gender = ["Male", "Female", "Other"]
+    race = ["White", "Black", "Asian", "Hispanic"]
+
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+
     submit = SubmitField('Update')
 
     def validate_username(self, username):
@@ -67,8 +78,11 @@ class UpdateAccountForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
+    category = ["Travel", "Adventure", "Financial", "Personal Growth"]
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
+    category = SelectField(label="Category", choices=category)
+
     submit = SubmitField('Post')
 
 class RequestResetForm(FlaskForm):

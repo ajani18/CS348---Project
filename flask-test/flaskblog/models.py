@@ -40,7 +40,7 @@ class Location(db.Model): #user location information
     state = db.Column(db.String(20), unique=True, nullable=False)
     country = db.Column(db.String(20), unique=True, nullable=False)
     zipcode = db.Column(db.Integer, unique=True, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
 
     def __repr__(self):
@@ -53,7 +53,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
-    location = db.relationship('Location', backref="user_location", lazy=True)
+    # location = db.relationship('Location', backref="user_location", lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
