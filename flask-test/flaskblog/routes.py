@@ -8,7 +8,7 @@ from flaskblog.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
 from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
-from flaskblog.models import User, Post, Private_Info, Bucket_to_Category, Category, Location
+
 
 @app.route("/")
 @app.route("/home")
@@ -27,17 +27,11 @@ def about():
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        private = Private_Info(email=form.email.data, password=hashed_password,
-            birthday=form.birthday.data, gender=form.gender.data, race=form.race.data)
-
         db.session.add(user)
-        db.session.add(private)
-
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
