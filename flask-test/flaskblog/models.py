@@ -10,10 +10,10 @@ def load_user(user_id):
 class Private_Info(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), unique=True, nullable=False)
-    birthday = db.Column(db.String(100), unique=True, nullable=False)
-    gender = db.Column(db.String(100), unique=True, nullable=False)
-    race = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), unique=False, nullable=False)
+    birthday = db.Column(db.String(100), unique=False, nullable=False)
+    gender = db.Column(db.String(100), unique=False, nullable=False)
+    race = db.Column(db.String(100), unique=False, nullable=False)
 
     def __repr__(self):
         return f"Test('{self.user_id}', '{self.email}', '{self.password}', '{self.birthday}', '{self.gender}', '{self.race}')"

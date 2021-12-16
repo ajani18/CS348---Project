@@ -26,8 +26,8 @@ class RegistrationForm(FlaskForm):
 
     city = StringField('City',
                            validators=[DataRequired()])
-    state = SelectField(label="Race", choices=["LA", "CA", "TX"])
-    country = SelectField(label="Race", choices=["USA"])
+    state = SelectField(label="State", choices=["LA", "CA", "TX"])
+    country = SelectField(label="Country", choices=["USA"])
     zipcode = StringField('Zipcode',
                            validators=[DataRequired()])
 

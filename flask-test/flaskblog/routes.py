@@ -33,10 +33,10 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         private = Private_Info(email=form.email.data, password=hashed_password,
             birthday= form.birthday.data, gender=form.gender.data, race=form.race.data)
-        location = Location(city=form.city.data, state=form.state.data, country=form.country.data, zipcode=form.zipcode.data)
+        # location = Location(city=form.city.data, state=form.state.data, country=form.country.data, zipcode=form.zipcode.data)
         db.session.add(user)
         db.session.add(private)
-        db.session.add(location)
+        # db.session.add(location)
 
 
         db.session.commit()
